@@ -39,13 +39,13 @@ body {
   z-index: -2;
   opacity: 0;
   transition: opacity 4s ease-in-out;
-  filter: brightness(0.4) saturate(1.2);
+  filter: brightness(0.25) saturate(1.2);
 }
 
 .bg-overlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10,10,26,0.3) 0%, rgba(10,10,26,0.7) 50%, rgba(10,10,26,0.95) 100%);
+  background: linear-gradient(180deg, rgba(10,10,26,0.6) 0%, rgba(10,10,26,0.85) 50%, rgba(10,10,26,0.98) 100%);
   z-index: -1;
 }
 
@@ -326,41 +326,41 @@ body {
   font-size: 1.1rem;
 }
 .clock-label {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 2px;
   font-weight: 600;
 }
 .clock-time-display {
-  margin-top: 2px;
+  margin-top: 4px;
 }
 .clock-time {
-  font-size: 2rem;
+  font-size: 3.5rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
 }
 .clock-date-display {
-  margin-top: 2px;
+  margin-top: 6px;
 }
 .clock-date {
-  font-size: 0.9rem;
+  font-size: 1.1rem;
   color: var(--text-secondary);
   font-weight: 400;
 }
 .clock-year-display {
-  margin-top: 2px;
+  margin-top: 4px;
 }
 .clock-year {
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--accent-purple);
   font-weight: 600;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
 }
 
 .hero-buttons {
@@ -1309,7 +1309,7 @@ body {
     padding: 14px 20px;
   }
   .clock-time {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
   }
 }
 
