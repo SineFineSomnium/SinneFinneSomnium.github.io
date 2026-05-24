@@ -368,8 +368,8 @@ body:hover #cursor-glow {
   transition: all 0.25s ease;
 }
 
-.input-group input:focus~.floating-label,
-.input-group input:valid~.floating-label {
+.input-group input:focus ~ .floating-label,
+.input-group input:valid ~ .floating-label {
   top: 6px;
   left: 44px;
   font-size: 0.7rem;
@@ -545,6 +545,11 @@ body:hover #cursor-glow {
 
 .visualizer.active .viz-bar {
   animation: vizBounce 0.6s ease-in-out infinite alternate;
+  height: 4px;
+}
+
+.visualizer:not(.active) .viz-bar {
+  height: 4px;
 }
 
 .visualizer.active .viz-bar:nth-child(1) {

@@ -127,7 +127,11 @@ document.addEventListener("DOMContentLoaded", function () {
     currentVideoIndex = idx;
     video.src = bgVideos[idx].url;
     video.load();
-    video.play().catch(function () { });
+    video.play().catch(function (err) { 
+      console.warn("Video playback failed, trying next video", err);
+      var nextIdx = pickRandom(bgVideos, currentVideoIndex);
+      if (nextIdx >= 0) startVideoWithFade(nextIdx);
+    });
 
     // Fade in
     video.style.opacity = "1";
@@ -144,6 +148,13 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 4000);
     }, 15000);
   }
+
+  // Handle video loading errors
+  video.addEventListener("error", function () {
+    console.error("Video failed to load, skipping to next");
+    var nextIdx = pickRandom(bgVideos, currentVideoIndex);
+    if (nextIdx >= 0) startVideoWithFade(nextIdx);
+  });
 
   // ===== Background Music System (Random Shuffle) =====
   function startMusic(idx) {
@@ -191,7 +202,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ===== Load Assets from assets.json =====
   fetch("assets.json")
-    .then(function (r) { return r.json(); })
+    .then(function (r) { 
+      if (!r.ok) throw new Error("Failed to load assets.json: " + r.status);
+      return r.json(); 
+    })
     .then(function (data) {
       bgVideos = data.videos || [];
       bgMusicList = data.music || [];
@@ -200,6 +214,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (bgVideos.length > 0) {
         var firstVideo = pickRandom(bgVideos, -1);
         startVideoWithFade(firstVideo);
+      } else {
+        console.warn("No videos found in assets.json");
       }
 
       // Prepare music (will try to play after user interaction or in sequence)
@@ -210,9 +226,16 @@ document.addEventListener("DOMContentLoaded", function () {
         if (songNameEl) {
           songNameEl.textContent = bgMusicList[firstMusic].name;
         }
+      } else {
+        console.warn("No music tracks found in assets.json");
       }
     })
-    .catch(function (err) { console.error("Failed to load assets.json", err); });
+    .catch(function (err) { 
+      console.error("Failed to load assets.json", err);
+      if (songNameEl) {
+        songNameEl.textContent = "No audio available";
+      }
+    });
 
   // ===== Sequence: Loading → Welcome → Login =====
   setTimeout(function () {
@@ -277,13 +300,13 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateMusicUI() {
     var vol = bgMusic.volume;
     if (!musicPlaying || vol === 0) {
-      musicIcon.textContent = "\uD83D\uDD07";
+      musicIcon.textContent = "🔇";
       visualizer.classList.remove("active");
     } else if (vol < 0.4) {
-      musicIcon.textContent = "\uD83D\uDD09";
+      musicIcon.textContent = "🔉";
       visualizer.classList.add("active");
     } else {
-      musicIcon.textContent = "\uD83D\uDD0A";
+      musicIcon.textContent = "🔊";
       visualizer.classList.add("active");
     }
   }
@@ -302,11 +325,15 @@ document.addEventListener("DOMContentLoaded", function () {
   document.addEventListener("touchstart", onFirstInteraction);
 
   // ===== Volume Control =====
+  function updateVolumeSliderStyle(val) {
+    volSlider.style.background = "linear-gradient(to right, #6c9fff 0%, #6c9fff " + val + "%, rgba(255,255,255,0.12) " + val + "%, rgba(255,255,255,0.12) 100%)";
+  }
+
   volSlider.addEventListener("input", function (e) {
     e.stopPropagation();
     var val = volSlider.value;
     bgMusic.volume = val / 100;
-    volSlider.style.background = "linear-gradient(to right, #6c9fff " + val + "%, rgba(255,255,255,0.12) " + val + "%)";
+    updateVolumeSliderStyle(val);
     volValue.textContent = val + "%";
     updateMusicUI();
   });
@@ -315,7 +342,7 @@ document.addEventListener("DOMContentLoaded", function () {
   volSlider.addEventListener("mousedown", function (e) { e.stopPropagation(); });
 
   var initVal = volSlider.value;
-  volSlider.style.background = "linear-gradient(to right, #6c9fff " + initVal + "%, rgba(255,255,255,0.12) " + initVal + "%)";
+  updateVolumeSliderStyle(initVal);
 
   // ===== Music Toggle =====
   musicToggle.addEventListener("click", function (e) {

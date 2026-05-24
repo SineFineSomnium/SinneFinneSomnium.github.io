@@ -39,14 +39,14 @@ document.addEventListener("DOMContentLoaded", function () {
       nav_skills: "ทักษะ",
       nav_projects: "โปรเจกต์",
       nav_contact: "ติดต่อ",
-      hero_greeting: "สวัสดี ผมชื่อ",
-      clock_label: "เวลากรุงเทพฯ",
+      hero_greeting: "สวัสดีค้าบบบบ ผมคือ",
+      clock_label: "เวลากรุงเทพฯ(GMT+7)",
       btn_projects: "ดูโปรเจกต์",
       btn_contact: "ติดต่อผม",
       btn_shuffle: "สุ่มคำคม",
       scroll: "เลื่อนลง",
       section_about: "เกี่ยวกับผม",
-      about_title: "ผมเป็นใคร?",
+      about_title: "ผมเป็นใคร?(ไครอะ?)",
       about_p1: "ผมเป็นนักพัฒนาที่หลงใหลในการสร้างประสบการณ์ดิจิทัลที่สวยงาม ผมชอบผสมผสานศิลปะและเทคโนโลยีเพื่อสร้างสิ่งที่เป็นเอกลักษณ์",
       about_p2: "ตั้งแต่การพัฒนาเว็บไปจนถึงการเขียนโค้ดเชิงสร้างสรรค์ ผมสำรวจจุดตัดระหว่างการออกแบบและวิศวกรรมเพื่อสร้างโปรเจกต์ที่มีปฏิสัมพันธ์",
       stat_projects: "โปรเจกต์",
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var timeOpts = { timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false };
     var bangkokTime = now.toLocaleString("en-US", timeOpts);
     var timeEl = document.getElementById("bangkok-time");
-    if (timeEl) timeEl.textContent = bangkokTime;
+    if (timeEl) timeEl.textContent = bangkokTime(GMT+7);
 
     // Date with day of week
     var dateOpts = { timeZone: "Asia/Bangkok", weekday: "long", day: "numeric", month: "long" };
@@ -168,18 +168,72 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // ===== Sidebar Quote Generator =====
-  var quotes = [
-    { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
-    { text: "Talk is cheap. Show me the code.", author: "Linus Torvalds" },
-    { text: "Make it simple, but significant.", author: "Don Draper" },
-    { text: "Art is science made clear.", author: "Jean Cocteau" },
-    { text: "Programs must be written for people to read, and only secondarily for machines to execute.", author: "Harold Abelson" },
-    { text: "Design is not just what it looks like and feels like. Design is how it works.", author: "Steve Jobs" },
-    { text: "To create something exceptional, your mindset must be relentlessly focused on the smallest detail.", author: "Giorgio Armani" },
-    { text: "First, solve the problem. Then, write the code.", author: "John Johnson" },
-    { text: "Creativity is intelligence having fun.", author: "Albert Einstein" },
-    { text: "The best way to predict the future is to invent it.", author: "Alan Kay" }
-  ];
+var quotes = [
+  // ==========================================
+  // 1. ปรัชญาสายลึก (Nietzsche, Camus, Dostoevsky) - 8 Quotes
+  // แนวเผชิญหน้ากับความว่างเปล่า การสร้างความหมาย และความจริงของชีวิต
+  // ==========================================
+  { text: "And if you gaze long into an abyss, the abyss also gazes into you.", author: "Friedrich Nietzsche" },
+  { text: "He who has a why to live for can bear almost any how.", author: "Friedrich Nietzsche" },
+  { text: "The mystery of human existence lies not in just staying alive, but in finding something to live for.", author: "Fyodor Dostoevsky" },
+  { text: "Man is a fickle and disreputable creature and, perhaps, like a chess player, loves the process of the game, not the end of it.", author: "Fyodor Dostoevsky" },
+  { text: "The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion.", author: "Albert Camus" },
+  { text: "In the depth of winter, I finally learned that within me there lay an invincible summer.", author: "Albert Camus" },
+  { text: "Should I kill myself, or have a cup of coffee?", author: "Albert Camus" },
+  { text: "Man is the only creature who refuses to be what he is.", author: "Albert Camus" },
+
+  // ==========================================
+  // 2. ปรัชญาการเมืองและการควบคุมตนเอง (Machiavelli & Stoic) - 8 Quotes
+  // แนวสัจนิยม อำนาจ และความสงบทางจิตใจในการควบคุมสิ่งรอบตัว
+  // ==========================================
+  { text: "Everyone sees what you appear to be, few experience what you really are.", author: "Niccolò Machiavelli" },
+  { text: "If an injury has to be done to a man it should be so severe that his vengeance need not be feared.", author: "Niccolò Machiavelli" },
+  { text: "It is not titles that honor men, but men that honor titles.", author: "Niccolò Machiavelli" },
+  { text: "It is much safer to be feared than loved, when one of the two must be lacking.", author: "Niccolò Machiavelli" },
+  { text: "You have power over your mind - not outside events. Realize this, and you will find strength.", author: "Marcus Aurelius" },
+  { text: "We suffer more often in imagination than in reality.", author: "Seneca" },
+  { text: "If it is not right do not do it; if it is not true do not say it.", author: "Marcus Aurelius" },
+  { text: "He who fears death will never do anything worth of a man who is alive.", author: "Seneca" },
+
+  // ==========================================
+  // 3. บุคคลในประวัติศาสตร์ (Historical Figures) - 8 Quotes
+  // ผู้นำ นักคิด และผู้เปลี่ยนโลกผ่านกลยุทธ์และความทะเยอทะยาน
+  // ==========================================
+  { text: "I came, I saw, I conquered.", author: "Julius Caesar" },
+  { text: "There is nothing impossible to him who will try.", author: "Alexander the Great" },
+  { text: "I am not afraid of an army of lions led by a sheep; I am afraid of an army of sheep led by a lion.", author: "Alexander the Great" },
+  { text: "The supreme art of war is to subdue the enemy without fighting.", author: "Sun Tzu" },
+  { text: "In the midst of chaos, there is also opportunity.", author: "Sun Tzu" },
+  { text: "History is a set of lies agreed upon.", author: "Napoleon Bonaparte" },
+  { text: "An iron curtain has descended across the Continent.", author: "Winston Churchill" },
+  { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+
+  // ==========================================
+  // 4. วาทะจากภาพยนตร์ระดับตำนาน (Cinema Wisdom) - 8 Quotes
+  // เน้นสปีชเปลี่ยนโลกของ Charlie Chaplin และประโยคทรงพลังจากหนังชั้นยอด
+  // ==========================================
+  { text: "We think too much and feel too little. More than machinery we need humanity.", author: "Charlie Chaplin (The Great Dictator)" },
+  { text: "Don't give yourselves to these unnatural men - machine men with machine minds and machine hearts!", author: "Charlie Chaplin (The Great Dictator)" },
+  { text: "You, the people, have the power to make this life free and beautiful, to make this life a wonderful adventure.", author: "Charlie Chaplin (The Great Dictator)" },
+  { text: "Why do we fall, sir? So that we can learn to pick ourselves up.", author: "Alfred Pennyworth (The Dark Knight Trilogy)" },
+  { text: "Great men are not born great, they grow great.", author: "Vito Corleone (The Godfather)" },
+  { text: "Do, or do not. There is no try.", author: "Yoda (Star Wars)" },
+  { text: "The things you own end up owning you.", author: "Tyler Durden (Fight Club)" },
+  { text: "It is not our abilities that show what we truly are… it is our choices.", author: "Albus Dumbledore (Harry Potter)" },
+
+  // ==========================================
+  // 5. นักคิดและนักจิตวิทยาร่วมสมัย (Peterson & Greene) - 8 Quotes
+  // แนวการพัฒนาตนเอง จิตวิทยาเชิงลึก และสัจนิยมในสังคมมนุษย์
+  // ==========================================
+  { text: "Set your house in perfect order before you criticize the world.", author: "Jordan Peterson" },
+  { text: "Compare yourself to who you were yesterday, not to who someone else is today.", author: "Jordan Peterson" },
+  { text: "If you don't say what you think then you kill your unborn self.", author: "Jordan Peterson" },
+  { text: "In order to be able to think, you have to risk being offensive.", author: "Jordan Peterson" },
+  { text: "When you show yourself to the world and display your talents, you naturally stir up all kinds of resentment, envy, and other manifestations of insecurity.", author: "Robert Greene (The 48 Laws of Power)" },
+  { text: "Never outshine the master.", author: "Robert Greene (The 48 Laws of Power)" },
+  { text: "The future belongs to those who learn more skills and combine them in creative ways.", author: "Robert Greene (Mastery)" },
+  { text: "Boldness makes even the smallest animal dangerous in its environment.", author: "Robert Greene (The 50th Law)" }
+];
 
   var sidebarQuoteTextEl = document.getElementById("sidebar-quote-text");
   var sidebarQuoteAuthorEl = document.getElementById("sidebar-quote-author");
