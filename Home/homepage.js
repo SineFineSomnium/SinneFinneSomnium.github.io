@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var timeOpts = { timeZone: "Asia/Bangkok", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false };
     var bangkokTime = now.toLocaleString("en-US", timeOpts);
     var timeEl = document.getElementById("bangkok-time");
-    if (timeEl) timeEl.textContent = bangkokTime(GMT+7);
+    if (timeEl) timeEl.textContent = bangkokTime ;
 
     // Date with day of week
     var dateOpts = { timeZone: "Asia/Bangkok", weekday: "long", day: "numeric", month: "long" };
